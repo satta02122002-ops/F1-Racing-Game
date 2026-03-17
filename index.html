@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F1 Racing Game MVP</title>
+  <link rel="stylesheet" href="src/styles/main.css" />
+  <!-- Import map: resolve 'three' to CDN for all ES modules -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="loading-screen">
+    <div class="loading-content">
+      <div class="f1-logo">F1</div>
+      <h1>RACING GAME</h1>
+      <div class="loading-bar-container">
+        <div class="loading-bar" id="loading-bar"></div>
+      </div>
+      <p id="loading-text">Initializing Engine...</p>
+    </div>
+  </div>
+
+  <div id="game-container" style="display:none;">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- HUD -->
+    <div id="hud">
+      <div id="hud-top-left">
+        <div class="hud-label">LAP</div>
+        <div id="lap-display">1 / 3</div>
+        <div class="hud-label">LAP TIME</div>
+        <div id="lap-time-display">0:00.000</div>
+        <div class="hud-label">BEST LAP</div>
+        <div id="best-lap-display">--:--.---</div>
+      </div>
+
+      <div id="hud-top-center">
+        <div id="position-display">P1</div>
+        <div id="race-status">READY</div>
+      </div>
+
+      <div id="hud-top-right">
+        <div class="hud-label">TOTAL TIME</div>
+        <div id="total-time-display">0:00.000</div>
+        <div class="hud-label">LAST LAP</div>
+        <div id="last-lap-display">--:--.---</div>
+      </div>
+
+      <!-- Speedometer -->
+      <div id="speedometer">
+        <canvas id="speedo-canvas" width="220" height="220"></canvas>
+        <div id="speed-value">0</div>
+        <div id="speed-unit">km/h</div>
+      </div>
+
+      <!-- Gear & RPM -->
+      <div id="gear-display">
+        <div id="rpm-bar-container">
+          <div id="rpm-bar"></div>
+        </div>
+        <div id="gear-number">N</div>
+        <div id="gear-label">GEAR</div>
+      </div>
+
+      <!-- DRS & ERS Indicators -->
+      <div id="status-indicators">
+        <div class="indicator" id="drs-indicator">DRS</div>
+        <div class="indicator" id="ers-indicator">ERS</div>
+      </div>
+
+      <!-- Throttle / Brake bars -->
+      <div id="pedal-display">
+        <div class="pedal-row">
+          <span>T</span>
+          <div class="pedal-bar-bg"><div class="pedal-bar throttle-bar" id="throttle-bar"></div></div>
+        </div>
+        <div class="pedal-row">
+          <span>B</span>
+          <div class="pedal-bar-bg"><div class="pedal-bar brake-bar" id="brake-bar"></div></div>
+        </div>
+      </div>
+
+      <!-- Mini Map -->
+      <div id="mini-map">
+        <canvas id="map-canvas" width="150" height="150"></canvas>
+        <div id="map-label">TRACK MAP</div>
+      </div>
+
+      <!-- Controls hint -->
+      <div id="controls-hint">
+        <span>[W/↑] Throttle</span>
+        <span>[S/↓] Brake</span>
+        <span>[A/D ← →] Steer</span>
+        <span>[E] DRS</span>
+        <span>[Q] ERS</span>
+        <span>[C] Camera</span>
+        <span>[R] Reset</span>
+      </div>
+    </div>
+
+    <!-- Race Finish Screen -->
+    <div id="finish-screen" style="display:none;">
+      <div class="finish-content">
+        <div class="finish-title">RACE COMPLETE</div>
+        <div id="finish-stats"></div>
+        <button id="restart-btn" onclick="window.game && window.game.restart()">RESTART RACE</button>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div id="countdown-display" style="display:none;"></div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

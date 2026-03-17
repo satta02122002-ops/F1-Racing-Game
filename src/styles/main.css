@@ -1,0 +1,374 @@
+/* ============================================================
+   F1 Racing Game - Main Stylesheet
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #000;
+  overflow: hidden;
+  font-family: 'Arial Narrow', Arial, sans-serif;
+  color: #fff;
+  user-select: none;
+}
+
+/* ---- Loading Screen ---- */
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.loading-content { text-align: center; }
+.f1-logo {
+  font-size: 72px;
+  font-weight: 900;
+  color: #e10600;
+  letter-spacing: -4px;
+  text-shadow: 0 0 40px rgba(225,6,0,0.8);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { text-shadow: 0 0 40px rgba(225,6,0,0.8); }
+  50% { text-shadow: 0 0 80px rgba(225,6,0,1), 0 0 120px rgba(225,6,0,0.4); }
+}
+.loading-content h1 {
+  font-size: 24px;
+  letter-spacing: 12px;
+  color: #ccc;
+  margin: 8px 0 30px;
+}
+.loading-bar-container {
+  width: 300px;
+  height: 4px;
+  background: #222;
+  border-radius: 2px;
+  margin: 0 auto 12px;
+  overflow: hidden;
+}
+.loading-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #e10600, #ff4444);
+  width: 0%;
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+#loading-text { color: #666; font-size: 13px; letter-spacing: 2px; }
+
+/* ---- Game Canvas ---- */
+#game-container { position: relative; width: 100vw; height: 100vh; }
+#game-canvas { display: block; width: 100%; height: 100%; }
+
+/* ---- HUD ---- */
+#hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Top panels */
+#hud-top-left, #hud-top-right {
+  position: absolute;
+  top: 16px;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 10px 16px;
+  border-radius: 4px;
+  min-width: 140px;
+}
+#hud-top-left { left: 16px; }
+#hud-top-right { right: 16px; }
+
+.hud-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #888;
+  margin-top: 6px;
+}
+.hud-label:first-child { margin-top: 0; }
+#lap-display, #lap-time-display, #best-lap-display,
+#total-time-display, #last-lap-display {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 1px;
+}
+#best-lap-display, #last-lap-display { color: #a855f7; }
+
+#hud-top-center {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 8px 24px;
+  border-radius: 4px;
+}
+#position-display {
+  font-size: 42px;
+  font-weight: 900;
+  color: #e10600;
+  line-height: 1;
+}
+#race-status {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #aaa;
+}
+
+/* ---- Speedometer ---- */
+#speedometer {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 220px;
+  height: 220px;
+}
+#speedo-canvas { position: absolute; top: 0; left: 0; }
+#speed-value {
+  position: absolute;
+  bottom: 56px;
+  width: 100%;
+  text-align: center;
+  font-size: 44px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(225,6,0,0.6);
+}
+#speed-unit {
+  position: absolute;
+  bottom: 42px;
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #888;
+}
+
+/* ---- Gear & RPM ---- */
+#gear-display {
+  position: absolute;
+  bottom: 20px;
+  right: 250px;
+  width: 160px;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 10px 14px;
+  text-align: center;
+}
+#rpm-bar-container {
+  position: relative;
+  height: 10px;
+  background: #111;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+#rpm-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00cc44, #ffcc00, #e10600);
+  transition: width 0.05s;
+  border-radius: 5px;
+}
+#gear-number {
+  font-size: 52px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+#gear-label { font-size: 10px; letter-spacing: 2px; color: #666; }
+
+/* ---- Status Indicators ---- */
+#status-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+.indicator {
+  padding: 4px 12px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #444;
+  transition: all 0.15s;
+}
+.indicator.active {
+  background: #e10600;
+  border-color: #e10600;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(225,6,0,0.6);
+}
+#ers-indicator.active {
+  background: #00cc44;
+  border-color: #00cc44;
+  box-shadow: 0 0 12px rgba(0,204,68,0.6);
+}
+
+/* ---- Pedal Display ---- */
+#pedal-display {
+  position: absolute;
+  bottom: 80px;
+  left: 16px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.pedal-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #888;
+}
+.pedal-bar-bg {
+  width: 80px;
+  height: 6px;
+  background: #111;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.pedal-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 3px;
+  transition: width 0.05s;
+}
+.throttle-bar { background: #00cc44; }
+.brake-bar { background: #e10600; }
+
+/* ---- Mini Map ---- */
+#mini-map {
+  position: absolute;
+  bottom: 20px;
+  left: 16px;
+  background: rgba(0,0,0,0.65);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 6px;
+  text-align: center;
+}
+#map-canvas { display: block; border-radius: 2px; }
+#map-label { font-size: 8px; letter-spacing: 2px; color: #555; margin-top: 3px; }
+
+/* ---- Controls Hint ---- */
+#controls-hint {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 16px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #555;
+  background: rgba(0,0,0,0.4);
+  padding: 5px 12px;
+  border-radius: 3px;
+}
+
+/* ---- Countdown ---- */
+#countdown-display {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 160px;
+  font-weight: 900;
+  color: #e10600;
+  text-shadow: 0 0 60px rgba(225,6,0,0.8);
+  animation: countAnim 0.8s ease-out;
+  pointer-events: none;
+}
+@keyframes countAnim {
+  0% { transform: scale(2); opacity: 0; }
+  30% { transform: scale(1); opacity: 1; }
+  70% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.5); opacity: 0; }
+}
+
+/* ---- Finish Screen ---- */
+#finish-screen {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.finish-content { text-align: center; }
+.finish-title {
+  font-size: 64px;
+  font-weight: 900;
+  color: #e10600;
+  letter-spacing: 8px;
+  margin-bottom: 30px;
+  text-shadow: 0 0 40px rgba(225,6,0,0.8);
+}
+#finish-stats {
+  font-size: 18px;
+  color: #ccc;
+  line-height: 2;
+  margin-bottom: 30px;
+}
+#finish-stats .stat-label { color: #888; font-size: 12px; letter-spacing: 2px; }
+#finish-stats .stat-value { color: #fff; font-weight: bold; }
+#finish-stats .purple { color: #a855f7; }
+#restart-btn {
+  background: #e10600;
+  color: #fff;
+  border: none;
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  border-radius: 3px;
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.2s;
+}
+#restart-btn:hover { background: #ff1a0a; }
+
+/* ---- Sector Flash ---- */
+.sector-flash {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  padding: 10px 30px;
+  border-radius: 4px;
+  pointer-events: none;
+  animation: sectorFade 2s ease-out forwards;
+}
+.sector-flash.purple { background: rgba(168,85,247,0.3); color: #a855f7; border: 1px solid #a855f7; }
+.sector-flash.green  { background: rgba(0,204,68,0.3);  color: #00cc44; border: 1px solid #00cc44; }
+.sector-flash.yellow { background: rgba(255,200,0,0.3); color: #ffc800; border: 1px solid #ffc800; }
+@keyframes sectorFade {
+  0%   { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
+  30%  { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%,-50%) translateY(-40px); }
+}
