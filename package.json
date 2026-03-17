@@ -1,0 +1,14 @@
+{
+  "name": "f1-racing-game",
+  "version": "1.0.0",
+  "description": "A realistic browser-based F1 racing game",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000",
+    "preview": "npx serve . -p 3000 --no-clipboard"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
